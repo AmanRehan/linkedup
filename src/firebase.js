@@ -19,4 +19,5 @@ const auth = getAuth(app);
 // Get a reference to the firebase realtime database service
 const database = getDatabase(app);
 
-export { db, auth, database };
+export default app; // Default export for Firebase app
+export { db, auth, database }; // Named exports
