@@ -1,20 +1,20 @@
-import firebase from './firebase';
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBVhkFnJnjC-9iTvcjL-7InPj3X6_Yb0B0",
-    authDomain: "linkedup-85b8b.firebaseapp.com",
-    projectId: "linkedup-85b8b",
-    storageBucket: "linkedup-85b8b.appspot.com",
-    messagingSenderId: "733169636782",
-    appId: "1:733169636782:web:92696f40771e255516643f"
-  };
+	apiKey: "AIzaSyBVhkFnJnjC-9iTvcjL-7InPj3X6_Yb0B0",
+	authDomain: "linkedup-85b8b.firebaseapp.com",
+	projectId: "linkedup-85b8b",
+	storageBucket: "linkedup-85b8b.appspot.com",
+	messagingSenderId: "733169636782",
+	appId: "1:733169636782:web:92696f40771e255516643f",
+};
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore();
+// Get instance of firestore
+const db = getFirestore(app);
 const auth = getAuth(app);
 // Get a reference to the firebase realtime database service
 const database = getDatabase(app);
