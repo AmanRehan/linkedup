@@ -23,7 +23,7 @@ function Feed() {
 	const fetchPosts = () => {
 		// Firestore collection, onSnapshot v9 (Use modular approach, do not use namespaced)
 		// To use namespaced imports, use firebase sdk v9
-		onSnapshot(collection(db, "posts"), (snapshot) =>
+		onSnapshot(collection(db, "posts").orderBy("timeStamp","desc"), (snapshot) =>
 			setPosts(
 				snapshot.docs.map((doc) => ({
 					id: doc.id,
@@ -62,7 +62,6 @@ function Feed() {
 		// });
 	};
 
-<<<<<<< HEAD
     return (
     <div className="feed">
         <div className="feed__inputContainer">
@@ -93,62 +92,6 @@ function Feed() {
         {/* <Post name="Aman Rehan" description="Test" message="Wow This worked"/> */}
     </div>
   )
-=======
-	return (
-		<div className="feed">
-			<div className="feed__inputContainer">
-				<div className="feed__input">
-					<CreateIcon />
-					<form action="" onSubmit={sendPost}>
-						<input
-							value={input}
-							onChange={(e) => setInput(e.target.value)}
-							type="text"
-						/>
-						<button type="submit" onClick={sendPost}>Send</button>
-					</form>
-				</div>
-				<div className="feed__inputOptions">
-					<InputOption Icon={ImageIcon} title="Photo" color="blue" />
-					<InputOption
-						Icon={SubscriptionsIcon}
-						title="Video"
-						color="green"
-					/>
-					<InputOption
-						Icon={EventNoteIcon}
-						title="Event"
-						color="orange "
-					/>
-					<InputOption
-						Icon={CalendarViewDayIcon}
-						title="Write Article"
-						color="gray"
-					/>
-				</div>
-			</div>
-			{/* Post */}
-			{
-				posts.map(
-					({ id, data: { name, description, message, photoUrl } }) => (
-						<Post
-							key={id}
-							name={name}
-							description={description}
-							message={message}
-							photoUrl={photoUrl}
-						/>
-					)
-				)
-			}
-			<Post
-				name="Aman Rehan"
-				description="Test"
-				message="Wow This worked"
-			/>
-		</div >
-	);
->>>>>>> f2f1afa6201e888ce3b67136352ad994da18af92
 }
 
 export default Feed;

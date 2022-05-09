@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// import firebase from './firebase';
-=======
->>>>>>> f2f1afa6201e888ce3b67136352ad994da18af92
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
@@ -27,8 +23,4 @@ const auth = getAuth(app);
 const database = getDatabase(app);
 
 export default app; // Default export for Firebase app
-<<<<<<< HEAD
 export { db, auth , database}; // Named exports
-=======
-export { db, auth, database }; // Named exports
->>>>>>> f2f1afa6201e888ce3b67136352ad994da18af92
