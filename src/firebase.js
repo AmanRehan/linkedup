@@ -1,4 +1,4 @@
-import firebase from './firebase';
+// import firebase from './firebase';
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth";
@@ -13,10 +13,14 @@ const firebaseConfig = {
     appId: "1:733169636782:web:92696f40771e255516643f"
   };
 
+  // const firebaseApp = firebase.initializeApp(firebaseConfig);
+  // const db = firebaseApp.firestore();
+  // const auth = firebase.auth();
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const auth = getAuth(app);
 // Get a reference to the firebase realtime database service
 const database = getDatabase(app);
 
-export { db, auth, database };
+export default app; // Default export for Firebase app
+export { db, auth , database}; // Named exports

@@ -45,7 +45,7 @@ function Feed() {
                 <CreateIcon />
                 <form action="">
                     <input value={input} onChange={e => setInput(e.target.value)} type="text" />
-                    <button  type="submit">Send</button>
+                    <button onClick={sendPost} type="submit">Send</button>
                 </form>
             </div>
             <div className="feed__inputOptions">
@@ -65,7 +65,7 @@ function Feed() {
                 photoUrl={photoUrl}
             />
         ))}
-        <Post name="Aman Rehan" description="Test" message="Wow This worked"/>
+        {/* <Post name="Aman Rehan" description="Test" message="Wow This worked"/> */}
     </div>
   )
 }
