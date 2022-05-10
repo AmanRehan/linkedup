@@ -3,7 +3,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import ImageIcon from "@mui/icons-material/Image";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
-import { addDoc, collection, onSnapshot, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, onSnapshot, orderBy, serverTimestamp } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
 import "./Feed.css";
@@ -23,7 +23,7 @@ function Feed() {
 	const fetchPosts = () => {
 		// Firestore collection, onSnapshot v9 (Use modular approach, do not use namespaced)
 		// To use namespaced imports, use firebase sdk v9
-		onSnapshot(collection(db, "posts").orderBy("timeStamp","desc"), (snapshot) =>
+		onSnapshot(collection(db, "posts"),orderBy("timestamp", "desc"), (snapshot) =>
 			setPosts(
 				snapshot.docs.map((doc) => ({
 					id: doc.id,
@@ -31,6 +31,7 @@ function Feed() {
 				}))
 			)
 		);
+    setInput("")
 	}
 
 	useEffect(fetchPosts, []);
