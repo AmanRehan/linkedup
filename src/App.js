@@ -9,7 +9,8 @@ import Sidebar from './Sidebar';
 
 function App() {
 
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.user); // Everything works after commenting this but cant see the user 
+                                                        // state in redux dev toolkit
 
   return (
     <div className="app">
