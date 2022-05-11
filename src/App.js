@@ -16,12 +16,15 @@ function App() {
     <div className="app">
       <Header />
 
-      {!user && (<Login />)}
-      <div className="app__body">
+      {!user ? (
+      <Login />):(
+        <div className="app__body">
         <Sidebar />
         <Feed />
         {/* Widgets */}
       </div>
+      )}
+      
     </div>
   );
 }

@@ -34,7 +34,7 @@ function Feed() {
     setInput("")
 	}
 
-	useEffect(fetchPosts, []);
+	useEffect(() =>fetchPosts(), []);
 
 	const sendPost = async (e) => {
 		e.preventDefault();
