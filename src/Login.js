@@ -7,7 +7,7 @@ function Login() {
   return (
     <div className="login">
       {/* <h1>Login Component </h1> */}
-      <img src="https://www.cnm.edu/depts/mco/marketing/images/linkedin-logo.png/@@images/6ad51553-54d7-4bc5-8580-bb557c918571.jpeg" alt="" />
+      <img src="https://1000logos.net/wp-content/uploads/2017/03/Font-of-the-LinkedIn-Logo.jpg" alt="" />
 
 
       <form action="">
@@ -19,8 +19,8 @@ function Login() {
         <input placeholder="Password" type="text" />
         <button type="submit" onClick={loginToApp}>Sign In</button>
       </form>
-      <p>Not a member?
-          <span className="login__register" onClick={register}>Register now</span></p>
+      <p>Not a member.
+          <span className="login__register" onClick={register}> Register now</span></p>
     </div>
   )
 }
