@@ -1,4 +1,4 @@
-import { fetchCount } from "./counterAPI"
+import { fetchCount } from "./counterAPI";
 
 const reducers = {
   login: (state, action) => {
@@ -6,7 +6,7 @@ const reducers = {
     // doesn't actually mutate the state because it uses the Immer library,
     // which detects changes to a "draft state" and produces a brand new
     // immutable state based off those changes
-    state.value = action.payload;
+    state.user = action.payload;
   },
   // decrement: (state) => {
   //   state.value -= 1;
@@ -18,10 +18,10 @@ const reducers = {
 };
 
 const extraReducers = {
-  [fetchCount.pending]: state => null,
-  [fetchCount.fulfilled]: state => null,
-  [fetchCount.rejected]: e => console.error(e)
-}
+  [fetchCount.pending]: (state) => null,
+  [fetchCount.fulfilled]: (state) => null,
+  [fetchCount.rejected]: (e) => console.error(e),
+};
 
 export default reducers;
-export {extraReducers}
+export { extraReducers };

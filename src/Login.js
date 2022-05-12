@@ -35,7 +35,7 @@ function Login() {
             );
           });
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => alert(error));
   };
   const loginToApp = (e) => {
     e.preventDefault();
@@ -49,27 +49,27 @@ function Login() {
 
       <form action="">
         <input
-          value={name}
+          defaultValue={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Full Name (if registered)"
           type="text"
         />
 
         <input
-          value={profilePic}
+          defaultValue={profilePic}
           onClick={(e) => setProfilePic(e.target.value)}
           placeholder="Profile Pic URL (optional)"
           type="text"
         />
 
         <input
-          value={email}
+          defaultValue={email}
           onClick={(e) => setEmail(e.target.value)}
           placeholder="Email"
           type="email"
         />
         <input
-          value={password}
+          defaultValue={password}
           onClick={(e) => setPassword(e.target.value)}
           placeholder="Password"
           type="text"
