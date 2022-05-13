@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import {
-  auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-} from "./firebase";
-import "./Login.css";
+  updateProfile
+} from "firebase/auth"
 import { login } from "./features/userSlice";
 import { useDispatch } from "react-redux";
+
+import {
+  auth,
+} from "./firebase";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -37,13 +41,14 @@ function Login() {
       return alert("Please enter a full name.");
     }
     //Doesnt recognize createUserWithEmailAndPassword as a function.Error in console.
-    createUserWithEmailAndPassword(auth, email, password) // There is a problem in this line.
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userAuth) => {
-        userAuth.user
-          .updateProfile({
-            displayName: name,
-            profileURL: profilePic,
-          })
+        const { user } = userAuth;
+        console.log(user)
+        updateProfile({
+          displayName: name,
+          profileURL: profilePic,
+        })
           .then(() => {
             dispatch(
               login({
@@ -53,7 +58,7 @@ function Login() {
                 photoUrl: profilePic,
               })
             );
-          });
+          }).catch(e => console.error(e));
       })
       .catch((error) => alert(error));
   };
@@ -82,13 +87,15 @@ function Login() {
 
         <input
           defaultValue={email}
-          onClick={(e) => setEmail(e.target.value)}
+          // Use onChange prop instead of onClick, onClick was getting trigerred only when you were clickin in the input field
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           type="email"
         />
         <input
           defaultValue={password}
-          onClick={(e) => setPassword(e.target.value)}
+          // Use onChange prop instead of onClick, onClick was getting trigerred only when you were clickin in the input field
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           type="text"
         />
