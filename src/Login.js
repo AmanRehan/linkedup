@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { auth } from "./firebase";
+import {
+  auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "./firebase";
 import "./Login.css";
 import { login } from "./features/userSlice";
 import { useDispatch } from "react-redux";
@@ -11,13 +15,30 @@ function Login() {
   const [profilePic, setProfilePic] = useState("");
   const dispatch = useDispatch();
 
+  const loginToApp = (e) => {
+    e.preventDefault();
+
+    auth
+      .signInWithEmailAndPassword(auth, email, password)
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+            displayName: userAuth.user.displayName,
+            photoUrl: userAuth.user.photoURL,
+          })
+        );
+      })
+      .catch((error) => alert(error));
+  };
+
   const register = () => {
     if (!name) {
       return alert("Please enter a full name.");
     }
-
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    //Doesnt recognize createUserWithEmailAndPassword as a function.Error in console.
+    createUserWithEmailAndPassword(auth, email, password) // There is a problem in this line.
       .then((userAuth) => {
         userAuth.user
           .updateProfile({
@@ -37,9 +58,7 @@ function Login() {
       })
       .catch((error) => alert(error));
   };
-  const loginToApp = (e) => {
-    e.preventDefault();
-  };
+
   return (
     <div className="login">
       <img
