@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
 } from "./firebase";
 import "./Login.css";
+// import { auth } from "./firebase";
 import { login } from "./features/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -18,7 +19,8 @@ function Login() {
   const loginToApp = (e) => {
     e.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
+    auth
+      .signInWithEmailAndPassword(auth, email, password)
       .then((userAuth) => {
         dispatch(
           login({
@@ -37,7 +39,7 @@ function Login() {
       return alert("Please enter a full name.");
     }
     //Doesnt recognize createUserWithEmailAndPassword as a function.Error in console.
-    createUserWithEmailAndPassword(auth, email, password) // There is a problem in this line.
+    createUserWithEmailAndPassword(email, password) // There is a problem in this line.
       .then((userAuth) => {
         userAuth.user
           .updateProfile({
