@@ -15,14 +15,13 @@ const firebaseConfig = {
 // const firebaseApp = firebase.initializeApp(firebaseConfig);
 // const db = firebaseApp.firestore();
 // const auth = firebase.auth();
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 // Get instance of firestore
-export const db = getFirestore(app);
-export const auth = getAuth(app);
+const db = getFirestore(app);
+const auth = getAuth(app);
 // Get a reference to the firebase realtime database service
-export const database = getDatabase(app);
-export const createUserWithEmailAndPassword =
-  auth.createUserWithEmailAndPassword;
+const database = getDatabase(app);
+const createUserWithEmailAndPassword = auth.createUserWithEmailAndPassword;
 
-// export default app; // Default export for Firebase app
-// export { db, auth, database, createUserWithEmailAndPassword }; // Named exports
+export default app; // Default export for Firebase app
+export { db, auth, database, createUserWithEmailAndPassword }; // Named exports

@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import {
-  auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-} from "./firebase";
+  updateProfile,
+} from "firebase/auth";
 import "./Login.css";
 // import { auth } from "./firebase";
 import { login } from "./features/userSlice";
 import { useDispatch } from "react-redux";
+
+import { auth } from "./firebase";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -19,8 +22,7 @@ function Login() {
   const loginToApp = (e) => {
     e.preventDefault();
 
-    auth
-      .signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((userAuth) => {
         dispatch(
           login({
@@ -39,13 +41,14 @@ function Login() {
       return alert("Please enter a full name.");
     }
     //Doesnt recognize createUserWithEmailAndPassword as a function.Error in console.
-    createUserWithEmailAndPassword(email, password) // There is a problem in this line.
+    createUserWithEmailAndPassword(auth, email, password) // There is a problem in this line.
       .then((userAuth) => {
-        userAuth.user
-          .updateProfile({
-            displayName: name,
-            profileURL: profilePic,
-          })
+        const { user } = userAuth;
+        console.log(user);
+        updateProfile({
+          displayName: name,
+          profileURL: profilePic,
+        })
           .then(() => {
             dispatch(
               login({
@@ -55,7 +58,8 @@ function Login() {
                 photoUrl: profilePic,
               })
             );
-          });
+          })
+          .catch((e) => console.error(e));
       })
       .catch((error) => alert(error));
   };
@@ -77,20 +81,22 @@ function Login() {
 
         <input
           defaultValue={profilePic}
-          onClick={(e) => setProfilePic(e.target.value)}
+          onChange={(e) => setProfilePic(e.target.value)}
           placeholder="Profile Pic URL (optional)"
           type="text"
         />
 
         <input
           defaultValue={email}
-          onClick={(e) => setEmail(e.target.value)}
+          // Use onChange prop instead of onClick, onClick was getting trigerred only when you were clickin in the input field
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           type="email"
         />
         <input
           defaultValue={password}
-          onClick={(e) => setPassword(e.target.value)}
+          // Use onChange prop instead of onClick, onClick was getting trigerred only when you were clickin in the input field
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           type="text"
         />
