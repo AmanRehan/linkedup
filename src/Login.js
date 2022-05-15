@@ -44,8 +44,7 @@ function Login() {
     createUserWithEmailAndPassword(auth, email, password) // There is a problem in this line.
       .then((userAuth) => {
         const { user } = userAuth;
-        console.log(user);
-        updateProfile({
+        updateProfile(user, {
           displayName: name,
           profileURL: profilePic,
         })
