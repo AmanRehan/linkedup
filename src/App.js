@@ -7,6 +7,7 @@ import { auth } from "./firebase";
 import Header from "./Header";
 import Login from "./Login";
 import Sidebar from "./Sidebar";
+import Widgets from "./Widgets";
 
 function App() {
   const { user, status, moreInitialProp } = useSelector(selectUser); // Destructuring the state data from the userSlice of redux store.
@@ -41,7 +42,7 @@ function App() {
         <div className="app__body">
           <Sidebar />
           <Feed />
-          {/* Widgets */}
+          <Widgets />
         </div>
       )}
     </div>
