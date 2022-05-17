@@ -52,8 +52,8 @@ function Feed() {
     e.preventDefault();
 
     const addObject = {
-      name: user.displayName,
-      description: user.email,
+      name: user.displayName, //Before : name : "Aman Rehan"
+      description: user.email, //Before : description : "This is a test"
       message: input,
       photoUrl: user.photoUrl || "",
       timeStamp: serverTimestamp(),
