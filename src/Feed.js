@@ -52,10 +52,10 @@ function Feed() {
     e.preventDefault();
 
     const addObject = {
-      name: user.displayName, //Before : name : "Aman Rehan"
-      description: user.email, //Before : description : "This is a test"
+      name: user.displayName, //Before -> name : "Aman Rehan"
+      description: user.email, //Before -> description : "This is a test"
       message: input,
-      photoUrl: user.photoUrl || "",
+      photoUrl: user.photoUrl || "", //Before -> photoUrl : ""
       timeStamp: serverTimestamp(),
     };
     // Add object to firestore (v9 Modular Syntax)
