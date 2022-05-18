@@ -48,17 +48,18 @@ function Feed() {
     e.preventDefault();
 
     const addObject = {
-      name: "Aman Rehan",
-      description: "This is a post",
+      name: user.displayName, //Before -> name : "Aman Rehan"
+      description: user.email, //Before -> description : "This is a test"
       message: input,
-      photoUrl: "",
+      photoUrl: user.photoUrl || "", //Before -> photoUrl : ""
       timeStamp: serverTimestamp(),
-    }
+    };
     // Add object to firestore (v9 Modular Syntax)
-    const docRef = await addDoc(collection(db, "posts"), addObject)
-    console.log(docRef)
-    if (docRef.id)
+    const docRef = await addDoc(collection(db, "posts"), addObject);
+    console.table(docRef);
+    if (docRef.id) {
       fetchPosts();
+    }
 
     // Firebase SDK v8 syntax
     // db.collection("posts").add({
@@ -68,38 +69,48 @@ function Feed() {
     // 	photoUrl: "",
     // 	timeStamp: firebase.fireStore.FieldValue.serverTimeStamp(),
     // });
-  };
 
-  return (
-    <div className="feed">
-      <div className="feed__inputContainer">
-        <div className="feed__input">
-          <CreateIcon />
-          <form action="">
-            <input value={input} onChange={e => setInput(e.target.value)} type="text" />
-            <button onClick={sendPost} type="submit">Send</button>
-          </form>
+    return (
+      <div className="feed">
+        <div className="feed__inputContainer">
+          <div className="feed__input">
+            <CreateIcon />
+            <form action="">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                type="text"
+              />
+              <button onClick={sendPost} type="submit">
+                Send
+              </button>
+            </form>
+          </div>
+          <div className="feed__inputOptions">
+            <InputOption Icon={ImageIcon} title="Photo" color="blue" />
+            <InputOption Icon={SubscriptionsIcon} title="Video" color="green" />
+            <InputOption Icon={EventNoteIcon} title="Event" color="orange " />
+            <InputOption
+              Icon={CalendarViewDayIcon}
+              title="Write Article"
+              color="gray"
+            />
+          </div>
         </div>
-        <div className="feed__inputOptions">
-          <InputOption Icon={ImageIcon} title="Photo" color="blue" />
-          <InputOption Icon={SubscriptionsIcon} title="Video" color="green" />
-          <InputOption Icon={EventNoteIcon} title="Event" color="orange " />
-          <InputOption Icon={CalendarViewDayIcon} title="Write Article" color="gray" />
-        </div>
+        {/* Post */}
+        {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+          <Post
+            key={id}
+            name={name}
+            description={description}
+            message={message}
+            photoUrl={photoUrl}
+          />
+        ))}
+        {/* <Post name="Aman Rehan" description="Test" message="Wow This worked"/> */}
       </div>
-      {/* Post */}
-      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
-        <Post
-          key={id}
-          name={name}
-          description={description}
-          message={message}
-          photoUrl={photoUrl}
-        />
-      ))}
-      {/* <Post name="Aman Rehan" description="Test" message="Wow This worked"/> */}
-    </div>
-  )
+    );
+  }
 }
 
 export default Feed;
