@@ -9,19 +9,19 @@ import {
   onSnapshot,
   orderBy,
   serverTimestamp,
+  getDocs,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectUser } from "./features/userSlice";
-
 import "./Feed.css";
 import { db } from "./firebase";
 import InputOption from "./InputOption";
 import Post from "./Post";
+import { selectUser } from "./features/userSlice";
 
 /* 
-	Firebase v9 (Modular docs)
-	https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document
+  Firebase v9 (Modular docs)
+  https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document
 */
 
 function Feed() {
@@ -29,33 +29,41 @@ function Feed() {
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
 
-  const fetchPosts = () => {
+  const fetchPosts = async () => {
+    // Get the documents from firestore under the posts collection
+    const querySnapshot = await getDocs(
+      collection(db, "posts"),
+      orderBy("timeStamp", "desc")
+    );
+    // Sort the querySnapshot by timeStamp
+    const sortedPosts = querySnapshot.docs.sort((a, b) => {
+      return b.data().timeStamp.seconds - a.data().timeStamp.seconds;
+    });
+
     // Firestore collection, onSnapshot v9 (Use modular approach, do not use namespaced)
     // To use namespaced imports, use firebase sdk v9
-    onSnapshot(
-      collection(db, "posts"),
-      orderBy("timestamp", "desc"),
-      (snapshot) =>
-        setPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        )
+    setPosts(
+      sortedPosts.map((doc) => ({
+        id: doc.id,
+        data: doc.data(),
+      }))
     );
+    console.log(posts);
     setInput("");
   };
 
-  useEffect(() => fetchPosts(), []);
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   const sendPost = async (e) => {
     e.preventDefault();
 
     const addObject = {
-      name: user.displayName, //Before -> name : "Aman Rehan"
-      description: user.email, //Before -> description : "This is a test"
+      name: "Aman Rehan", //Before -> name : "Aman Rehan"
+      description: "user.email", //Before -> description : "This is a test"
       message: input,
-      photoUrl: user.photoUrl || "", //Before -> photoUrl : ""
+      photoUrl: "", //Before -> photoUrl : ""
       timeStamp: serverTimestamp(),
     };
     // Add object to firestore (v9 Modular Syntax)
@@ -64,17 +72,16 @@ function Feed() {
     if (docRef.id) {
       fetchPosts();
     }
-
-    // Firebase SDK v8 syntax
-    // db.collection("posts").add({
-    // 	name: "Aman Rehan",
-    // 	description: "This is a post",
-    // 	message: input,
-    // 	photoUrl: "",
-    // 	timeStamp: firebase.fireStore.FieldValue.serverTimeStamp(),
-    // });
   };
 
+  // Firebase SDK v8 syntax
+  // db.collection("posts").add({
+  // 	name: "Aman Rehan",
+  // 	description: "This is a post",
+  // 	message: input,
+  // 	photoUrl: "",
+  // 	timeStamp: firebase.fireStore.FieldValue.serverTimeStamp(),
+  // });
   return (
     <div className="feed">
       <div className="feed__inputContainer">
