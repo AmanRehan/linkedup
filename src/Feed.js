@@ -5,11 +5,13 @@ import ImageIcon from "@mui/icons-material/Image";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import { addDoc, collection, onSnapshot, orderBy, serverTimestamp, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-
+import { useSelector } from "react-redux";
 import "./Feed.css";
 import { db } from "./firebase";
 import InputOption from "./InputOption";
 import Post from "./Post";
+import { selectUser } from "./features/userSlice";
+
 
 /* 
   Firebase v9 (Modular docs)
@@ -17,6 +19,7 @@ import Post from "./Post";
 */
 
 function Feed() {
+  const user = useSelector(selectUser);
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
 
@@ -27,9 +30,6 @@ function Feed() {
     const sortedPosts = querySnapshot.docs.sort((a, b) => {
       return b.data().timeStamp.seconds - a.data().timeStamp.seconds;
     });
-    sortedPosts.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data().message}`);
-    });
 
     // Firestore collection, onSnapshot v9 (Use modular approach, do not use namespaced)
     // To use namespaced imports, use firebase sdk v9
@@ -39,6 +39,7 @@ function Feed() {
         data: doc.data(),
       }))
     );
+    console.log(posts)
     setInput("")
   }
 
