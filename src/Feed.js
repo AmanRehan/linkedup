@@ -5,19 +5,16 @@ import ImageIcon from "@mui/icons-material/Image";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {
   addDoc,
-  collection,
-  onSnapshot,
-  orderBy,
-  serverTimestamp,
-  getDocs,
+  collection, getDocs, orderBy,
+  serverTimestamp
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice";
 import "./Feed.css";
 import { db } from "./firebase";
 import InputOption from "./InputOption";
 import Post from "./Post";
-import { selectUser } from "./features/userSlice";
 
 /* 
   Firebase v9 (Modular docs)
@@ -25,7 +22,7 @@ import { selectUser } from "./features/userSlice";
 */
 
 function Feed() {
-  const user = useSelector(selectUser);
+  const {user} = useSelector(selectUser);
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
 
@@ -54,14 +51,15 @@ function Feed() {
 
   useEffect(() => {
     fetchPosts();
+    console.log(user);
   }, []);
 
   const sendPost = async (e) => {
     e.preventDefault();
 
     const addObject = {
-      name: "Aman Rehan", //Before -> name : "Aman Rehan"
-      description: "user.email", //Before -> description : "This is a test"
+      name: user.displayName, //Before -> name : "Aman Rehan"
+      description: user.email, //Before -> description : "This is a test"
       message: input,
       photoUrl: "", //Before -> photoUrl : ""
       timeStamp: serverTimestamp(),
